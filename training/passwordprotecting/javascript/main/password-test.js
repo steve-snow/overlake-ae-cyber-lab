@@ -80,7 +80,7 @@ function main() {
 
   // call security.postNewUser with username and diff password - robust - successful
 
-  console.log(`\n... logging item ${++itemCounter} ................ insert New User with username and diff password - robust - successful\n`)
+  console.log(`\n... logging item ${++itemCounter} ................ insert New User with username and good password - robust - successful\n`)
   if (security.insertUser(user3, pwd3)){
     passingCount++;
     report += `\n - Item ${itemCounter} : PASSING - user added sucessfully`;

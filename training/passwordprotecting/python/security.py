@@ -1,6 +1,6 @@
-import storage
+from storage import Storage
 import bcrypt
-import user
+# import user
 
 """
 Security service layer allows new user creation, login, logout, access validation
@@ -10,13 +10,14 @@ https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/
 
 """
 class Security:
-  salt = bcrypt.gensalt(4)
+  salt = bcrypt.gensalt(10)
+  _mockDb = Storage
 
-  def __init__(self,):
-    self._mockDb = storage.Storage
+  #region INSERT, LOGIN
 
-  def insertUser(self, username: str | None, password: str | None, publicName: str | None) -> bool:
+  def insertUser(username: str | None, password: str | None = None, publicName: str | None =None) -> bool:
     # 1. TODO, if no password, return false
+    print(f" Security.insertUser (  {username} {password} {publicName}  )  ")
     if (password == None):
       print("ERROR - missing password")
       return False
@@ -26,20 +27,25 @@ class Security:
       return False
 
     # TODO, check if user exists, if so, return an appropriate message
-
+    if Storage.doesUserExist(username):
+      print("ERROR - this username already in use")
+      return False
 
     # BONUS TODO: validate password complexity and abort insert with meaningful message if not complex enough
 
+    if len(password) < 8:
+      print("ERROR - Password needs at least 8 characters")
+      return False
 
     # TODO hash password
-    hashed_password = bcrypt.hashpw(password, self.salt)
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), Security.salt)
     print(hashed_password)
 
 
     # TODO pass the hashed password instead of the insecure password
-    self._mockDb.insertUser(username, hashed_password, publicName)
+    Security._mockDb.insertUser(username, hashed_password, publicName)
 
-    print('    .Security.insertUser - xxxx')
+    print(f'    .Security.insertUser - {username}')
     return True
   
   def loginUser(username: str | None, password: str | None) -> int | None:
@@ -62,6 +68,10 @@ class Security:
 
     return None
   
+  #endregion LOGIN
+  
+  #region LOGOUT
+
   def logoutUsername (username: str):
 
     print('    .Security.logoutUsername - xxxx')
@@ -75,16 +85,21 @@ class Security:
 
     print('    .Security.logoutToken - xxxx')
 
+  #endregion
   
-  def shutdown (token: str):
+  #region DATA ACCESS
 
-    print('    .Security.shutdown - Shutting down security')
+  #endregion
+
+  def shutdown (token: str = None):
+    print('\n    .Security.shutdown - Shutting down security')
+    Storage.shutdown()
 
 if __name__ == '__main__':
 
   print('Security class test code running')
 
-  testSec = Security()
+  testSec = Security(str)
   # print(f" - SECURITY - {testSto.doesUserExist("HAL")}")
 
   user1name = "user1"

@@ -1,5 +1,5 @@
 import guid
-import user
+from user import User
 from token import UserToken
 from collections import defaultdict
 """
@@ -8,39 +8,45 @@ Storage simulates a generic storage device that could be a database
 
 class Storage:
 
-  USERS:user.User = []
+  USERS:User = []
   USER_TOKENS:UserToken = []
   DATA = []
 
   expirationMsec = 10000
 
-  def insertUser(self, username: str, password: str, publicName: str) -> int:
-    newUser = user.User(username, password, publicName)
+  def insertUser(username: str = None, password: str = None, publicName: str = None) -> int:
+    if username == None or password == None:
+      print("Failed to insert user, missing critical information")
+      return False
+    newUser = User(username, password, publicName)
     Storage.USERS.append(newUser)
     print(f"    .Storage.insertUser - Inserting: {newUser.id()} {username} {newUser._publicName}")
     return newUser.id()
   
-  def doesUserExist(self, username:str):
-
+  def doesUserExist(username:str = None):
+    if username == None:
+      return False
     for u in Storage.USERS:
       if u.username() == username:
         return True
     return False
   
-  def getUser_RESTRICTED(self, username):
+  def getUser_RESTRICTED(username = None):
+    if username == None:
+      return None
     for u in Storage.USERS:
       if u.username() == username:
         return u
     print(f"    .Storage.getUserHash - Failed to find user: {username}")
     return None
   
-  def loginUser(self, userId):
+  def loginUser(userId = -1):
     token = guid.generateGUID()
     print(f"    Generated token: {token}")
     Storage.USER_TOKENS.append(UserToken(userId, token))
     return token
   
-  def isTokenValid(self, token:str):
+  def isTokenValid(token:str = "0000"):
     found = None
     for uToken in Storage.USER_TOKENS:
       if uToken.token() == token:
@@ -53,14 +59,14 @@ class Storage:
         found._isValid = False
     return None
 
-  def getTokenFromUserId(self, userId:int):
+  def getTokenFromUserId(userId:int = -1):
     found = None
     for uToken in Storage.USER_TOKENS:
       if uToken.userId() == userId:
         found = uToken
     return found
 
-  def logout(self, userId:int):
+  def logout(userId:int = -1):
     found = None
     for uToken in Storage.USER_TOKENS:
       if uToken.userId() == userId:
@@ -68,7 +74,7 @@ class Storage:
     if found != None:
       found.invalidateToken()
 
-  def logoutToken(self, token:str):
+  def logoutToken(token:str = None):
     found = None
     for uToken in Storage.USER_TOKENS:
       if uToken.token() == token:
@@ -76,25 +82,30 @@ class Storage:
     if found != None:
       found.invalidateToken()
 
-  def logoutUsername(self, username:str):
-    user = self.getUser_RESTRICTED(username)
+  def logoutUsername(username:str = None):
+    usr = Storage.getUser_RESTRICTED(username)
     found = None
     for uToken in Storage.USER_TOKENS:
-      if uToken.userId() == user.userId():
+      if uToken.userId() == usr.UserId():
         found = uToken
     if found != None:
       found.invalidateToken()
 
-  def isDuplicate(self, username:str):
+  def isDuplicate(username:str = None):
     counter = 0
     for u in Storage.USERS:
       if u.username() == username:
         counter += 1
     return counter
   
-  def shutdown (token: str):
-    # TODO as required
+  def shutdown (token: str = None):
+
     print('    .Storage.shutdown - Shutting down security')
+    print('    .Storage - USERS content analysis:\n')
+    if len(Storage.USERS) < 1:
+      print("   - - - No users exist in storage - - -")
+    for u in Storage.USERS:
+      print(f"   USER:   {u.describe()}")
 
 if __name__ == '__main__':
 
@@ -111,4 +122,6 @@ if __name__ == '__main__':
   print(f"\nchecking for existing user: {user1name}")
 
   print(f"\n- STORAGE - USERS contains {user1name} : {testSto.doesUserExist(user1name)}")
+
+  testSto.shutdown()
   
