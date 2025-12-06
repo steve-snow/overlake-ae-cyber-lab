@@ -1,0 +1,12 @@
+{
+  "name": "overlake-composite-sqdn-cybertraining-password-protection",
+  "version": "1.0.0",
+  "author": "Steve Snow <stephen.snow@wawg.cap.gov> (https://www.overlakecap.org/)",
+  "main": "password-test.js",
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "uuid": "^10.0.0",
+    "xml2js": "^0.6.2"
+  }
+}
