@@ -1,3 +1,4 @@
+from datetime import datetime
 class User:
   _idRef = 0
 
@@ -7,8 +8,8 @@ class User:
     self._username = username
     self._publicName = publicName
     self._pwdHash = pwdHash
-    self._createdDateTime = 0
-    self._modifiedDateTime = self._createdDateTime
+    self._createdDateTime = datetime.now()
+    self._lastModifiedDateTime = self._createdDateTime
     self._lastLoginDateTime = 0
 
   def username(self):
@@ -31,4 +32,4 @@ class User:
     self._lastLoginDateTime = loginDateTIme
 
   def describe(self):
-    print(f" User: ${self._id} ${self._username} ${self._publicName} ${self._pwdHash} ${self._createdDateTime}")
+    print(f" User: {self._id} {self._username} {self._publicName} {self._pwdHash}   {self._createdDateTime}")
