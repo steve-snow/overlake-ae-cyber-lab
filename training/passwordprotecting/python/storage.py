@@ -14,7 +14,7 @@ class Storage:
 
   expirationMsec = 10000
 
-  def insertUser(username: str = None, password: str = None, publicName: str = None) -> int:
+  def insertUser(username: str = None, password: str = None, publicName: str = None) -> int | None:
     if username == None or password == None:
       print("Failed to insert user, missing critical information")
       return False
@@ -23,7 +23,7 @@ class Storage:
     print(f"    .Storage.insertUser - Inserting: {newUser.id()} {username} {newUser._publicName}")
     return newUser.id()
   
-  def doesUserExist(username:str = None):
+  def doesUserExist(username:str = None) -> bool:
     if username == None:
       return False
     for u in Storage.USERS:
@@ -31,7 +31,7 @@ class Storage:
         return True
     return False
   
-  def getUser_RESTRICTED(username = None):
+  def getUser_RESTRICTED(username = None) -> User | None:
     if username == None:
       return None
     for u in Storage.USERS:
@@ -40,7 +40,7 @@ class Storage:
     print(f"    .Storage.getUserHash - Failed to find user: {username}")
     return None
   
-  def loginUser(userId = -1):
+  def loginUser(userId = -1) -> str:
     token = guid.generateGUID()
     print(f"    Generated token: {token}")
     Storage.USER_TOKENS.append(UserToken(userId, token))

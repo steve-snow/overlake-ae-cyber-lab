@@ -1,6 +1,19 @@
-# Using Password Logins
+# Encrypting Password Logins
 
 You will modify the security.js or security.py file 
+
+Please replace them from the originals folder when you are done with exercise
+
+## Video tutorial links
+
+```
+Getting latest version through Git repo  
+Github repo  https://github.com/steve-snow/overlake-ae-cyber-lab
+
+Python password hasing using Bcrypt  https://youtu.be/XwoxpkQvPNs
+Javascript password hasing using Bcrypt  https://youtu.be/mjbpZmnVkzQ
+
+```
 
 ## Javascript
 
@@ -32,4 +45,19 @@ You will modify the security.js or security.py file
 
 - Add the number `2` to move on to the next phase of work.
 - `node pasword-test.js 2` or  `python pasword-test.py 2`
-- 
+
+## Installation Links
+
+- Node.js   ```  ```
+- Python 3    ``` ```
+- Visual Studio Code  ```  ```
+- Git Bash for Windows ```  ```
+
+## Setting up Repo in lieu of copying folder from thumb drive
+
+
+
+
+
+## Getting latest repo code
+
