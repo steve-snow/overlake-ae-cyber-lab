@@ -109,7 +109,7 @@ def main():
 
   itemCounter += 1
   print(f"\n... logging item {itemCounter} ................ verify no duplicate exists for username\n")
-  if Storage.doesUserExist(user3):
+  if Storage.isDuplicate(user3):
     issuesCount += 1
     report += f"\n - Item {itemCounter} : FAILED - inserted new user but that user already exists"
   else:
@@ -239,7 +239,7 @@ def main():
 
   #endregion
 
-  print(f"\n------ PASSWORD TEST FINISHED -- PASSING passingCount -- FAILING issuesCount ------\n\n")
+  print(f"\n------ PASSWORD TEST FINISHED -- PASSING {passingCount} -- FAILING {issuesCount} ------\n\n")
   print(report)
 
 if __name__ == '__main__':

@@ -26,15 +26,14 @@ class Security:
       print("ERROR - missing username")
       return False
 
+    # BONUS TODO: validate password complexity and abort insert with meaningful message if not complex enough
+    if len(password) < 8:
+      print("ERROR - Password needs at least 8 characters")
+      return False
+
     # TODO, check if user exists, if so, return an appropriate message
     if Storage.doesUserExist(username):
       print("ERROR - this username already in use")
-      return False
-
-    # BONUS TODO: validate password complexity and abort insert with meaningful message if not complex enough
-
-    if len(password) < 8:
-      print("ERROR - Password needs at least 8 characters")
       return False
 
     # TODO hash password
@@ -48,24 +47,32 @@ class Security:
     print(f'    .Security.insertUser - {username}')
     return True
   
-  def loginUser(username: str | None, password: str | None) -> int | None:
-    print('    .Security.loginUser - xxxx')
+  def loginUser(username: str | None = None, password: str | None = None) -> int | None:
+    print(f'    .Security.loginUser - {username}  {password}')
 
     # TODO, handle null username or null password
+    if username == None or password == None:
+      print(f"ERROR - Invalid username or password")
+      return False
+    
+    # TODO get the hashed password and id in the restricted User object, using the username
+    restrictedUser = Security._mockDb.getUser_RESTRICTED(username)
 
-
-    # TODO get the hashed password in the restricted User object, using the username
-    restrictedUser = None
-
-
-    # TODO if restrited user is null, pring error, return null
-
+    # TODO if restrited user is null, print error, return null
+    if restrictedUser == None:
+      print(f"ERROR - Invalid username or password")
+      return None
 
     # TODO check password with bcrypt against hashed password
-    # if it matches, get the user Id and pass it to the loginUser method
+    if bcrypt.checkpw(password.encode('utf-8'), restrictedUser.pwd()):
+
+      # if it matches, get the user Id and pass it to the loginUser method
+      authToken = Security._mockDb.loginUser(restrictedUser.id())
+      print(f"    .Security.loginUser - auth token: {authToken}")
+      return authToken
+
     # if it doesn't match, return null
-
-
+    print(f"ERROR - Invalid username or password")
     return None
   
   #endregion LOGIN

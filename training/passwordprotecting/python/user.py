@@ -20,6 +20,9 @@ class User:
   def id(self):
     return self._id
 
+  def pwd(self):
+    return self._pwdHash
+
   def setPublicName(self, publicName:str):
     self._publicName = publicName
     self._createdDateTime += 1

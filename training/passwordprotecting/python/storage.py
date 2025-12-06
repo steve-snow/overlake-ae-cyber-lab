@@ -46,6 +46,15 @@ class Storage:
     Storage.USER_TOKENS.append(UserToken(userId, token))
     return token
   
+  def isDuplicate(username:str = None):
+    counter = 0
+    for u in Storage.USERS:
+      if u.username() == username:
+        counter += 1
+    return counter > 1
+  
+  #region TOKEN
+
   def isTokenValid(token:str = "0000"):
     found = None
     for uToken in Storage.USER_TOKENS:
@@ -65,6 +74,10 @@ class Storage:
       if uToken.userId() == userId:
         found = uToken
     return found
+  
+  #endregion
+
+  #region LOGOUT
 
   def logout(userId:int = -1):
     found = None
@@ -91,16 +104,11 @@ class Storage:
     if found != None:
       found.invalidateToken()
 
-  def isDuplicate(username:str = None):
-    counter = 0
-    for u in Storage.USERS:
-      if u.username() == username:
-        counter += 1
-    return counter
-  
+  #endregion LOGOUT
+
   def shutdown (token: str = None):
 
-    print('    .Storage.shutdown - Shutting down security')
+    print('    .Storage.shutdown - Shutting down Storage')
     print('    .Storage - USERS content analysis:\n')
     if len(Storage.USERS) < 1:
       print("   - - - No users exist in storage - - -")
