@@ -89,7 +89,16 @@ cd overlake-ae-cyber-lab
 
 1. Open Git Bash terminal in Windows or from a Visual Studio Code instance open to a folder within the repo you wish to update
 
-2. Assuming you haven't changed any files in the repo, you can:
+
+2. Check for changes (red or green file names)
+
+```
+git status
+```
+
+3. If you have chagned files indicated, try to use the Git sidebar menu (icon has three small circles with lines between them) to discard them so you can pull in the latst changes.
+
+3. If you haven't changed any files in the repo, you can:
 
 ```
 git pull origin main
