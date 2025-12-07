@@ -30,7 +30,7 @@ class Security:
 
 
     # TODO pass the hashed password instead of the insecure password
-
+    Security._mockDb.insertUser(username, password, publicName)
     # print(f'    .Security.insertUser - {username} - into database')
 
     return True

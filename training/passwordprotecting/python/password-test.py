@@ -10,8 +10,6 @@ def main():
   itemCounter = 0
   report = "Password Test Report"
 
-  guardian = ()
-
   runLevel = cmdLine.readCmdLine()
   print(f"::: Run Level : runLevel :::")
 
@@ -135,6 +133,26 @@ def main():
   else:
     issuesCount += 1
     report += f"\n - Item {itemCounter} : FAILED - user missing from storage"
+
+  # verify passwords encrypted
+
+  itemCounter += 1
+  print(f"\n... logging item {itemCounter} ................ verify user3  password encrypted\n")
+  if (pwd3 == Storage.getUser_RESTRICTED(user3).pwd()):
+    issuesCount += 1
+    report += f"\n - Item {itemCounter} : FAILED - {user3} password has not been hashed"
+  else:
+    passingCount += 1
+    report += f"\n - Item {itemCounter} : PASSING - {user3} password has been hashed"
+
+  itemCounter += 1
+  print(f"\n... logging item {itemCounter} ................ verify user4  password encrypted\n")
+  if (pwd4 == Storage.getUser_RESTRICTED(user4).pwd()):
+    issuesCount += 1
+    report += f"\n - Item {itemCounter} : FAILED - {user4} password has not been hashed"
+  else:
+    passingCount += 1
+    report += f"\n - Item {itemCounter} : PASSING - {user4} password has been hashed"
 
   #endregion
 

@@ -138,6 +138,26 @@ function main() {
     report += `\n - Item ${itemCounter} : FAILED - user missing from storage`;
   }
 
+  // verify passwords encrypted
+
+  console.log(`\n... logging item ${++itemCounter} ................ verify user3  password encrypted\n`)
+  if (pwd3 == storageAccess.getUser_RESTRICTED(user3)._password) {
+    issuesCount++;
+    report += `\n - Item ${itemCounter} : FAILED - ${user3} password has not been hashed`;
+  } else {
+    passingCount++;
+    report += `\n - Item ${itemCounter} : PASSING - ${user3} password has been hashed`;
+  }
+
+  console.log(`\n... logging item ${++itemCounter} ................ verify user4  password encrypted\n`)
+  if (pwd4 == storageAccess.getUser_RESTRICTED(user4)._password) {
+    issuesCount++;
+    report += `\n - Item ${itemCounter} : FAILED - ${user4} password has not been hashed`;
+  } else {
+    passingCount++;
+    report += `\n - Item ${itemCounter} : PASSING - ${user4} password has been hashed`;
+  }
+
   //#endregion
 
   //#region LOGIN - LEVEL 2
